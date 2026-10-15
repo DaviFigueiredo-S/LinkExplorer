@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark" data-public="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171320">
+  <meta name="description" content="Um lugar para cada link. Organize suas descobertas em pastas, personalize seu espaço e compartilhe coleções.">
+  <meta name="referrer" content="no-referrer">
+  <title>Link Explorer — Seu universo de links</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="app">
+    <div id="sidebar-overlay" class="sidebar-overlay" hidden></div>
+    <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+      <a href="#home" class="brand" data-action="navigate" data-route="home" aria-label="Ir para início">
+        <img src="./assets/favicon.svg" alt="" width="43" height="43">
+        <span><strong id="brand-name">Link Explorer</strong><small>UM LUGAR PARA CADA LINK</small></span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <nav id="primary-nav" class="primary-nav" aria-label="Atalhos"></nav>
+      <div class="nav-label"><span>SUAS PASTAS</span><button class="icon-button editor-only" data-action="new-folder" aria-label="Criar pasta principal" data-icon="plus"></button></div>
+      <nav id="folder-nav" class="folder-nav" aria-label="Pastas principais"></nav>
+      <button class="sidebar-add editor-only" data-action="new-folder"><span data-icon="plus"></span> Nova pasta</button>
+      <div class="sidebar-bottom">
+        <div class="local-note" id="local-note"><span class="local-note-icon" data-icon="shield"></span><div><strong>Seu espaço é seu.</strong><p>Seus links ficam neste navegador.</p></div></div>
+        <button class="nav-button editor-only" data-action="publish"><span data-icon="share"></span> Compartilhar coleção</button>
+        <button class="nav-button editor-only" data-action="backup"><span data-icon="download"></span> Backup e dados</button>
+        <button class="nav-button" data-action="settings"><span data-icon="settings"></span> <span id="settings-label">Configurações</span></button>
+        <div class="sidebar-signature"><span class="avatar">LE</span><div><strong>Meu explorador</strong><small id="sidebar-mode">Espaço pessoal</small></div><span class="online-dot"></span></div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" data-action="mobile-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebar" data-icon="menu"></button>
+        <div class="history-controls"><button class="icon-button" id="back-button" data-action="back" aria-label="Voltar" data-icon="left"></button><button class="icon-button" id="forward-button" data-action="forward" aria-label="Avançar" data-icon="right"></button></div>
+        <nav id="breadcrumbs" class="breadcrumbs" aria-label="Caminho atual"></nav>
+        <label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Buscar no seu universo..." aria-label="Pesquisar pastas e links" autocomplete="off"><kbd>/</kbd></label>
+        <span class="save-status" id="save-status" role="status"><i></i><span>Iniciando...</span></span>
+      </header>
+      <div id="mode-banner" class="mode-banner" hidden><span data-icon="info"></span><span id="mode-text"></span><button id="return-editor" class="text-button" data-action="return-editor" hidden>Voltar à edição <span data-icon="arrow"></span></button></div>
+      <div id="storage-warning" class="storage-warning" role="alert" hidden></div>
+      <main class="main-content" id="main-content" tabindex="-1">
+        <div class="page-header">
+          <div><div class="eyebrow" id="page-eyebrow">SEU ESPAÇO DIGITAL</div><h1 id="page-title">Tudo no seu lugar<span>.</span></h1><p id="page-subtitle">Suas descobertas, organizadas do seu jeito.</p></div>
+          <div class="page-actions editor-only"><button class="button secondary share-button" data-action="publish"><span data-icon="share"></span> Compartilhar</button><button class="button primary" data-action="new"><span data-icon="plus"></span> Novo item</button></div>
+        </div>
+        <div class="section-toolbar">
+          <div class="section-name"><h2 id="section-title">Suas pastas</h2><span id="section-count" class="count-badge" role="status" aria-live="polite">0</span></div>
+          <div class="view-tools"><label class="sort-label"><span class="sr-only">Ordenar itens</span><select id="sort"><option value="manual">Ordem personalizada</option><option value="name">Nome: A → Z</option><option value="recent">Mais recentes</option></select></label><div class="view-switch" role="group" aria-label="Modo de visualização"><button class="icon-button" data-action="view" data-view="icons" aria-label="Visualizar ícones" aria-pressed="true" data-icon="grid"></button><button class="icon-button" data-action="view" data-view="cards" aria-label="Visualizar cartões" aria-pressed="false" data-icon="cards"></button><button class="icon-button" data-action="view" data-view="list" aria-label="Visualizar lista" aria-pressed="false" data-icon="list"></button></div></div>
+        </div>
+        <div id="list-head" class="list-head" hidden><span>Nome</span><span>Localização / descrição</span><span>Tipo</span></div>
+        <div id="items" class="items view-icons" aria-label="Pastas e links"></div>
+        <section id="empty-state" class="empty-state" hidden><div class="empty-icon" data-icon="folder"></div><h2 id="empty-title">Uma pasta, muitas possibilidades.</h2><p id="empty-description">Adicione o primeiro link ou crie uma subpasta.</p><button class="button primary editor-only" data-action="new"><span data-icon="plus"></span> Criar primeiro item</button></section>
+        <section id="pinned-wrap" class="pinned-section"><div class="section-toolbar"><div class="section-name"><span class="section-star" data-icon="star"></span><h2>Sempre por perto</h2><span class="small-label">SEUS FAVORITOS</span></div><button class="text-button" data-action="favorites">Ver todos <span data-icon="right"></span></button></div><div id="pinned-items" class="items view-cards"></div></section>
+        <footer class="workspace-footer"><span id="item-summary">Organizando seu universo...</span><span><span data-icon="monitor"></span> Cada vez mais perto dos links</span></footer>
+      </main>
+    </div>
+  </div>
+  <dialog id="editor-dialog" class="dialog editor-dialog" aria-labelledby="editor-title">
+    <form id="editor-form">
+      <div class="dialog-header"><div><span class="eyebrow">DO SEU JEITO</span><h2 id="editor-title">Uma nova descoberta</h2></div><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div>
+      <div class="editor-tabs" role="group" aria-label="Tipo de item"><button type="button" id="tab-link" data-action="editor-type" data-type="link" class="selected"><span data-icon="link"></span> Link</button><button type="button" id="tab-folder" data-action="editor-type" data-type="folder"><span data-icon="folder"></span> Pasta</button></div>
+      <div class="editor-columns">
+        <div class="editor-fields">
+          <label class="field">Nome<input id="item-name" name="name" maxlength="80" required placeholder="Como você quer chamar?"></label>
+          <label class="field" id="url-field">Endereço do link<input id="item-url" name="url" type="text" inputmode="url" maxlength="2048" placeholder="https://exemplo.com" autocapitalize="off" spellcheck="false"></label>
+          <label class="field"><span>Descrição <span class="optional">opcional</span></span><textarea id="item-description" name="description" rows="2" maxlength="800" placeholder="Uma pequena pista do que tem aqui..."></textarea></label>
+          <details class="customization" open><summary>Personalizar aparência</summary><div class="field"><span>Ícone</span><div id="icon-picker" class="icon-picker"></div></div><div class="field"><span>Cor de destaque</span><div id="color-picker" class="color-picker"></div></div><label class="checkbox-field" id="favicon-field"><input id="item-favicon" type="checkbox"> Usar favicon do site <span class="optional">(quando disponível)</span></label><div class="image-controls"><label class="upload-button"><span data-icon="upload"></span> Enviar imagem<input id="item-image" type="file" accept="image/png,image/jpeg,image/webp" class="sr-only"></label><button type="button" class="text-button" id="remove-image" data-action="remove-image" hidden>Remover</button></div><p class="field-hint">JPG, PNG ou WebP · até 5 MB. A imagem será otimizada.</p></details>
+        </div>
+        <aside class="editor-preview"><span class="eyebrow">UMA PRÉVIA DO SEU ITEM</span><div id="item-preview"></div><p>Um pequeno detalhe.<br>A sua identidade.</p></aside>
+      </div>
+      <p class="form-error" id="editor-error" role="alert" hidden></p>
+      <div class="dialog-footer"><span id="editor-location" class="field-hint"></span><button type="button" class="button secondary" data-action="close-dialog">Cancelar</button><button type="submit" class="button primary" id="save-item"><span data-icon="check"></span> Salvar item</button></div>
+    </form>
+  </dialog>
+  <dialog id="settings-dialog" class="dialog" aria-labelledby="settings-title">
+    <form id="settings-form"><div class="dialog-header"><div><span class="eyebrow">SEU ESPAÇO</span><h2 id="settings-title">Deixe com a sua cara.</h2></div><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div><div class="dialog-body"><div id="identity-settings"><label class="field">Nome do explorador<input id="explorer-name" maxlength="40" required></label><label class="field">Uma frase para seu espaço<input id="explorer-subtitle" maxlength="120"></label></div><div class="field"><span>Tema</span><div class="theme-picker"><label class="theme-option"><input type="radio" name="theme" value="dark"><span class="theme-sample dark"><i></i><i></i><i></i></span><span><span data-icon="moon"></span> Roxo noturno</span></label><label class="theme-option"><input type="radio" name="theme" value="light"><span class="theme-sample light"><i></i><i></i><i></i></span><span><span data-icon="sun"></span> Lavanda claro</span></label></div></div><div class="field"><span>Cor de destaque</span><div id="settings-colors" class="color-picker"></div></div><p class="info-note"><span data-icon="info"></span><span id="settings-note">A personalização fica salva neste navegador, junto dos seus links.</span></p></div><p class="form-error" id="settings-error" role="alert" hidden></p><div class="dialog-footer"><button type="button" class="button secondary" data-action="close-dialog">Cancelar</button><button type="submit" class="button primary">Salvar preferências</button></div></form>
+  </dialog>
+  <dialog id="backup-dialog" class="dialog" aria-labelledby="backup-title"><div class="dialog-header"><div><span class="eyebrow">CUIDE DAS SUAS DESCOBERTAS</span><h2 id="backup-title">Backup e dados</h2></div><button class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div><div class="dialog-body"><div class="backup-banner"><span data-icon="shield"></span><div><strong>Salvo aqui. Seguro com um backup.</strong><p>Seu explorador fica neste navegador. Não há conta ou sincronização entre aparelhos.</p></div></div><button class="backup-action" data-action="export-backup"><span class="action-icon" data-icon="download"></span><span><strong>Exportar backup completo</strong><small>Pastas, links, imagens e preferências em JSON.</small></span><span data-icon="right"></span></button><label class="backup-action"><span class="action-icon" data-icon="upload"></span><span><strong>Restaurar um backup</strong><small>Importe seu JSON de outro aparelho ou navegador.</small></span><span data-icon="right"></span><input id="import-file" type="file" accept=".json,application/json" class="sr-only"></label><p class="field-hint">A importação é validada antes de substituir sua coleção. Limite: 20 MB. Exporte seus dados antes de mudar de domínio ou limpar os dados do navegador.</p><p class="form-error" id="backup-error" role="alert" hidden></p><p id="backup-stat" class="backup-stat"></p></div><div class="dialog-footer"><button class="button secondary" data-action="close-dialog">Concluir</button></div></dialog>
+  <dialog id="publish-dialog" class="dialog publish-dialog" aria-labelledby="publish-title"><form id="publish-form"><div class="dialog-header"><div><span class="eyebrow">BOAS DESCOBERTAS MERECEM COMPANHIA</span><h2 id="publish-title">Compartilhe uma coleção.</h2></div><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div><div class="dialog-body"><p class="dialog-intro">Escolha o que vai para sua página pública. Somente os itens selecionados e o conteúdo das pastas escolhidas serão incluídos.</p><div class="two-fields"><label class="field">Nome da coleção<input id="public-title" maxlength="40" required></label><label class="field">Descrição<input id="public-subtitle" maxlength="120"></label></div><div class="selection-label"><strong>O que você quer compartilhar?</strong><button type="button" class="text-button" data-action="select-all">Selecionar tudo</button></div><div id="publish-items" class="publish-items"></div><p class="info-note"><span data-icon="globe"></span><span>O pacote gera um site de leitura para publicar no GitHub Pages ou na Vercel. Alterações futuras exigem uma nova exportação. Seus dados pessoais continuam aqui.</span></p><p class="form-error" id="publish-error" role="alert" hidden></p></div><div class="dialog-footer"><button type="button" class="button secondary" data-action="preview-public">Ver prévia</button><button type="submit" class="button primary" id="export-public"><span data-icon="download"></span> Baixar site público</button></div></form></dialog>
+  <dialog id="move-dialog" class="dialog" aria-labelledby="move-title"><form id="move-form"><div class="dialog-header"><div><span class="eyebrow">CADA COISA NO SEU LUGAR</span><h2 id="move-title">Mover item</h2></div><button type="button" class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div><div class="dialog-body"><p id="move-name" class="dialog-intro"></p><label class="field">Pasta de destino<select id="move-target"></select></label><p class="field-hint">A pasta atual e as subpastas do item não podem ser escolhidas como destino.</p><p class="form-error" id="move-error" role="alert" hidden></p></div><div class="dialog-footer"><button type="button" class="button secondary" data-action="close-dialog">Cancelar</button><button type="submit" class="button primary">Mover para cá</button></div></form></dialog>
+  <dialog id="confirm-dialog" class="dialog confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-header"><h2 id="confirm-title">Confirmar ação</h2><button class="icon-button" data-action="close-dialog" aria-label="Fechar" data-icon="close"></button></div><div class="dialog-body"><p id="confirm-message"></p><p class="form-error" id="confirm-error" role="alert" hidden></p></div><div class="dialog-footer"><button class="button secondary" data-action="close-dialog">Cancelar</button><button class="button danger" id="confirm-action">Confirmar</button></div></dialog>
+  <div id="context-menu" class="context-menu" role="menu" aria-label="Ações do item" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden><span data-icon="check"></span><span id="toast-text"></span><button class="text-button" id="toast-action" hidden>Desfazer</button><button class="icon-button" data-action="dismiss-toast" aria-label="Fechar aviso" data-icon="close"></button></div>
+  <noscript><div class="noscript">Ative o JavaScript para usar o Link Explorer. Seus dados serão armazenados apenas neste navegador.</div></noscript>
+</body>
+</html>
